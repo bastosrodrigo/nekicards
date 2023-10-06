@@ -1,0 +1,20 @@
+.container-home {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgb(6, 4, 19);
+}
+
+.box-home {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  width: 800px;
+  height: 500px;
+  background-color: beige;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}

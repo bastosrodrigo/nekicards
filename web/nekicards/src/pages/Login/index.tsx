@@ -1,77 +1,72 @@
-import { useState, useContext } from "react";
+import React, { useState } from "react";
+import { useAuth } from "../../contexts/AuthContext";
+import logo from "../../assets/logo.png";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../../contexts/Auth/AuthContext";
-import axios, { AxiosResponse } from "axios";
+import "./styles.css";
 
-export const Login = () => {
-  const auth = useContext(AuthContext);
+import Home from "../Home";
+
+function App() {
+  const { login, logout, isAuthenticated } = useAuth();
+  const [email, setEmail] = useState<string>("");
+  const [senha, setSenha] = useState<string>("");
+
   const navigate = useNavigate();
-  const [email, setEmail] = useState("");
-  const [senha, setSenha] = useState("");
-  /*
+
   const handleLogin = async () => {
-    if (email && senha) {
-      const isLogged = await auth.signin(email, senha);
-      if (isLogged) {
-        navigate("/");
+    try {
+      const response = await axios.post("http://localhost:8080/login", {
+        email,
+        senha,
+      });
+      if (response.status === 200) {
+        const { token } = response.data;
+        console.log("Chegou aqui dentro do IF");
+        login(token);
+        navigate("/home");
       } else {
-        alert("NÃO DEU CERTO");
+        console.error("Falha no login");
       }
+    } catch (error) {
+      console.error("Erro durante o login:", error);
     }
   };
-*/
 
-  interface ApiResponse {
-    token: string;
-    // Adicione outros campos, se necessário, com base na estrutura da resposta da API
-  }
-
-  const handleLogin = async (): Promise<void> => {
-    if (email && senha) {
-      try {
-        const response: AxiosResponse<ApiResponse> = await axios.post(
-          "http://localhost:8080/login",
-          {
-            email: email,
-            senha: senha,
-          }
-        );
-
-        if (response.status === 200) {
-          // Autenticação bem-sucedida
-          const data: ApiResponse = response.data;
-          const token: string = data.token; // Supondo que a API retorna um token
-
-          // Guarde o token em algum lugar (por exemplo, localStorage ou cookies)
-          // Redirecione o usuário para a página principal
-          navigate("/");
-        } else {
-          // Autenticação falhou
-          alert("NÃO DEU CERTO");
-        }
-      } catch (error) {
-        console.error("Erro ao fazer login:", error);
-      }
-    }
+  const handleLogout = () => {
+    logout();
   };
 
   return (
-    <div>
-      <h2>Página fechada</h2>
-      <input
-        type="text"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        placeholder="Digite seu email"
-      />
-      <input
-        type="text"
-        value={senha}
-        onChange={(e) => setSenha(e.target.value)}
-        placeholder="Digite sua senha"
-      />
+    <div className="container-login">
+      <div className="box-login">
+        <div className="content-esquerda">
+          <img src={logo} alt="" />
+        </div>
+        <div className="content-direita">
+          <h3>Faça aqui seu login.</h3>
+          <div className="login-form">
+            <label htmlFor="email">Digite seu email</label>
+            <input
+              type="text"
+              id="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
 
-      <button onClick={handleLogin}>LOGAR</button>
+            <label htmlFor="senha">Digite sua senha</label>
+            <input
+              type="password"
+              id="senha"
+              value={senha}
+              onChange={(e) => setSenha(e.target.value)}
+            />
+            <button onClick={handleLogin}>ENTRAR</button>
+          </div>
+        </div>
+      </div>
     </div>
   );
-};
+}
+
+export default App;
