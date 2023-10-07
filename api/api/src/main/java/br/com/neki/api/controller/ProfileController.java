@@ -13,6 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("profiles")
 public class ProfileController {
@@ -30,12 +32,19 @@ public class ProfileController {
 
         return ResponseEntity.created(uri).body(new ProfileListagemDTO(profile));
     }
-
+/*
     @GetMapping
     @Transactional
     public ResponseEntity<Page<ProfileListagemDTO>> listarProfiles(Pageable paginacao) {
         var page = repository.findAll(paginacao).map(ProfileListagemDTO::new);
 
+        return ResponseEntity.ok(page);
+    }
+*/
+    @GetMapping
+    @Transactional
+    public ResponseEntity<List<ProfileListagemDTO>> listarProfiles() {
+        var page = repository.findAll().stream().map(ProfileListagemDTO::new).toList();
         return ResponseEntity.ok(page);
     }
 

@@ -55,7 +55,7 @@ input {
 }
 
 .login-form button {
-  background-color: rgb(176, 156, 194);
+  background-color: #b09cc2;
   border-radius: 5px;
   font-weight: bold;
   margin-bottom: 10px;
@@ -66,7 +66,7 @@ input {
 }
 
 .login-form button:hover {
-  background-color: rgb(85, 67, 102);
+  background-color: #766d88;
   border-radius: 5px;
   color: #FFF;
   font-weight: bold;

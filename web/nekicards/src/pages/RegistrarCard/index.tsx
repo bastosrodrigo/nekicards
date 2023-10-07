@@ -1,9 +1,20 @@
 import axios from "axios";
 import React, { useState } from "react";
-
+import avatar from "../../assets/avatar.png";
+import qrcode from "../../assets/qrcode.png";
+import {
+  AiFillLinkedin,
+  AiFillGithub,
+  AiFillInstagram,
+  AiFillFacebook,
+} from "react-icons/ai";
+import Header from "../../components/header";
 import "./styles.css";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../contexts/AuthContext";
 
-const Home = () => {
+const RegistrarCard = () => {
+  const { logout } = useAuth();
   const [email, setEmail] = useState("");
   const [nomeCompleto, setNomeCompleto] = useState("");
   const [nomeSocial, setNomeSocial] = useState("");
@@ -11,6 +22,8 @@ const Home = () => {
   const [foto, setFoto] = useState("");
   const [telefone, setTelefone] = useState("");
   const [validarEmail, setValidarEmail] = useState<boolean>(true);
+
+  const navigate = useNavigate();
 
   const handleValidEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
     const email = e.target.value;
@@ -64,10 +77,40 @@ const Home = () => {
     }
   };
 
+  const handleLogout = () => {
+    logout();
+    navigate("/");
+  };
+
   return (
-    <div className="container-home">
-      <div className="box-home">
-        <form onSubmit={handleSubmit}>
+    <>
+      <Header mycards={false} />
+      <div className="container-home-2">
+        <div className="cards-home">
+          <div className="cards-front">
+            <div className="caixa1">
+              <img src={avatar} alt="" />
+            </div>
+            <div className="caixa2">
+              <h4>Nome: {nomeCompleto}</h4>
+              <p>Nome social: {nomeSocial}</p>
+              <p>Data nascimento: {dataNascimento}</p>
+              <p>Email: {email}</p>
+              <p>Telefone: {telefone}</p>
+            </div>
+          </div>
+          <div className="cards-back">
+            <img src={qrcode} alt="" />
+            <p>
+              <AiFillLinkedin size={30} />
+              <AiFillGithub size={30} />
+              <AiFillInstagram size={30} />
+              <AiFillFacebook size={30} />
+            </p>
+          </div>
+        </div>
+
+        <form onSubmit={handleSubmit} className="form-home">
           <div>
             <label>E-mail*:</label>
             <input
@@ -125,14 +168,30 @@ const Home = () => {
             />
           </div>
           <div>
-            <button type="submit" disabled={!validarEmail}>
-              Enviar
-            </button>
+            <label htmlFor="">Linkedin:</label>
+            <input type="text" />
           </div>
+          <div>
+            <label htmlFor="">Github:</label>
+            <input type="text" />
+          </div>
+          <div>
+            <label htmlFor="">Instagram:</label>
+            <input type="text" />
+          </div>
+          <div>
+            <label htmlFor="">Facebook:</label>
+            <input type="text" />
+          </div>
+
+          <button type="submit" disabled={!validarEmail}>
+            Enviar
+          </button>
+          <div></div>
         </form>
       </div>
-    </div>
+    </>
   );
 };
 
-export default Home;
+export default RegistrarCard;

@@ -1,14 +1,12 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import logo from "../../assets/logo.png";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "./styles.css";
 
-import Home from "../Home";
-
 function App() {
-  const { login, logout, isAuthenticated } = useAuth();
+  const { login } = useAuth();
   const [email, setEmail] = useState<string>("");
   const [senha, setSenha] = useState<string>("");
 
@@ -22,7 +20,8 @@ function App() {
       });
       if (response.status === 200) {
         const { token } = response.data;
-        console.log("Chegou aqui dentro do IF");
+        localStorage.setItem("token", token);
+        console.log("Chegou aqui dentro do IF", token);
         login(token);
         navigate("/home");
       } else {
@@ -31,10 +30,6 @@ function App() {
     } catch (error) {
       console.error("Erro durante o login:", error);
     }
-  };
-
-  const handleLogout = () => {
-    logout();
   };
 
   return (

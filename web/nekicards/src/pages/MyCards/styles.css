@@ -1,0 +1,106 @@
+.container-home {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+  background-color: #e0ecab;
+  overflow-x: none;
+}
+
+.box-home {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  width: 800px;
+  height: 500px;
+  background-color: beige;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.teste1 {
+  display: flex;
+  justify-content: space-between;
+}
+
+.cards-home-1 {
+  display: flex;
+  justify-content: center;
+  flex-direction: column-reverse;
+  align-items: center;
+  gap: 30px;
+  margin-bottom: 20px;
+}
+
+.cards-front {
+  width: 350px;
+  height: 200px;
+  background-color: aquamarine;
+  border-radius: 10px;
+  display: flex;
+}
+
+.caixa1 {
+  width: 100px;
+  height: 100%;
+  text-align: center;
+}
+
+.caixa2 {
+  width: 250px;
+  padding: 10px;
+}
+
+.caixa2 h4 {
+  margin: 5px;
+}
+
+.caixa2 p {
+  margin: 5px;
+}
+
+.email {
+  width: 226px;
+  height: 21px;
+  flex-shrink: 0;
+}
+
+.cards-front img {
+  height: 100px;
+  width: auto;
+  flex-shrink: 0;
+  border-radius: 5px;
+  margin-left: 5px;
+}
+
+.cards-back {
+  width: 350px;
+  height: 200px;
+  background-color: #775b5b;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.cards-back img {
+  width: 50px;
+  height: 50px;
+}
+
+.form-home {
+  display: grid;
+  grid-template-columns: 100% 100%;
+  gap: 20px;
+  justify-content: center;
+  flex-direction: column;
+  width: 300px;
+}
+
+.card-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
