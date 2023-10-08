@@ -35,4 +35,5 @@ public class AutenticacaoController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
 }

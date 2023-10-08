@@ -1,13 +1,15 @@
-.container-login {
+import styled from "styled-components";
+
+export const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100vw;
   height: 100vh;
   background-color: rgb(6, 4, 19);
-}
+`;
 
-.box-login {
+export const Box = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -16,45 +18,50 @@
   height: 500px;
   background-color: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
+`;
 
-.content-esquerda {
+export const Esquerda = styled.div`
   flex: 1;
   text-align: center;
-}
+`;
 
-.content-esquerda img {
+export const Imagem = styled.img`
   max-width: 100%;
   height: auto;
-}
+`;
 
-.content-direita {
+export const Direita = styled.div`
   flex: 1;
   padding: 20px;
-}
+`;
 
-.content-direita h3 {
+export const H3 = styled.h3`
   text-align: center;
-}
+`;
 
-.login-form {
+export const Form = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   max-width: 300px;
   margin: 0 auto;
-}
+`;
 
-.login-form label,
-input {
+export const Label = styled.label`
+  display: block;
+  width: 100%;
+  height: 30px;
+`;
+
+export const Input = styled.input`
   display: block;
   width: 100%;
   height: 30px;
   margin-bottom: 10px;
-}
+`;
 
-.login-form button {
+export const Button = styled.button`
   background-color: #b09cc2;
   border-radius: 5px;
   font-weight: bold;
@@ -63,15 +70,10 @@ input {
   padding: 10px;
   width: 100%;
   cursor: pointer;
-}
 
-.login-form button:hover {
-  background-color: #766d88;
-  border-radius: 5px;
-  color: #FFF;
-  font-weight: bold;
-  transition: 0.5s;
-  padding: 10px;
-  width: 100%;
-  cursor: pointer;
-}
+  :hover {
+    background-color: #766d88;
+    color: #fff;
+    transition: 0.5s;
+  }
+`;

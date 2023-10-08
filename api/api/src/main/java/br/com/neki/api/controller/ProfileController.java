@@ -3,6 +3,7 @@ package br.com.neki.api.controller;
 import br.com.neki.api.dto.ProfileCadastroDTO;
 import br.com.neki.api.dto.ProfileListagemDTO;
 import br.com.neki.api.entity.Profile;
+import br.com.neki.api.infra.exception.TratadorDeErros;
 import br.com.neki.api.repository.ProfileRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,12 @@ public class ProfileController {
     @PostMapping
     @Transactional
     public ResponseEntity cadastrarProfile(@RequestBody @Valid ProfileCadastroDTO dados, UriComponentsBuilder uriBuilder){
+        var existingProfile = repository.findByEmail(dados.email());
+
+        if (existingProfile != null) {
+            throw new TratadorDeErros.EmailDuplicadoException(dados.email());
+        }
+
         var profile = new Profile(dados);
         repository.save(profile);
 

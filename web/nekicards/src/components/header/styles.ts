@@ -7,14 +7,14 @@ export const HeaderStyled = styled.header`
   position: inherit;
   top: 0;
   width: 100vw;
-  height: 80px;
+  height: 100px;
   margin-bottom: 20px;
-  background-color: #efe6ff;
+  background-color: #04050d;
 `;
 
-export const TituloH2 = styled.h2`
-  margin: 0;
-  padding-left: 20px;
+export const Imagem = styled.img`
+  width: 80px;
+  margin-left: 20px;
 `;
 
 export const Nav = styled.nav`
