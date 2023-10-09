@@ -71,6 +71,22 @@ public class ProfileController {
         return ResponseEntity.ok(new ProfileListagemDTO(profile));
     }
 
+    @PutMapping("/{id}")
+    @Transactional
+    public ResponseEntity atualizarProfile(@PathVariable Long id, @RequestBody @Valid ProfileListagemDTO dados) {
+        var profile = repository.findById(id);
+
+        if (profile.isPresent()) {
+            Profile existingProfile = profile.get();
+            existingProfile.atualizarInformacoes(dados);
+            repository.save(existingProfile);
+            return ResponseEntity.ok(new ProfileListagemDTO(existingProfile));
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+
     @GetMapping("/{id}")
     public ResponseEntity buscarPorId(@PathVariable Long id) {
         var profile = repository.getReferenceById(id);

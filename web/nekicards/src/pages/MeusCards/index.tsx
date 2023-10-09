@@ -1,16 +1,31 @@
 import Header from "../../components/header";
 import {
+  Container,
+  Cards,
+  CardsContainer,
+  CardFront,
+  Image,
+  Box1,
+  Box2,
+  ImageBack,
+  CardBack,
+  H4,
+  P,
+  Button,
+} from "./styles";
+import {
   AiFillLinkedin,
   AiFillGithub,
   AiFillInstagram,
   AiFillFacebook,
 } from "react-icons/ai";
 import qrcode from "../../assets/qrcode.png";
-import "./styles.css";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useAuth } from "../../contexts/AuthContext";
 import api from "../../api";
+import { Link } from "react-router-dom";
+import Modal from "../../components/modal";
 
 interface Profiles {
   id: number;
@@ -30,6 +45,7 @@ interface Profiles {
 
 const MyCards: React.FC = () => {
   const [profiles, setProfiles] = useState<Profiles[]>([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const { token } = useAuth();
 
   const handleGetAll = async () => {
@@ -45,18 +61,23 @@ const MyCards: React.FC = () => {
         }
       );
       setProfiles(response.data);
-      console.log(response.data);
     } catch (error) {
       console.error("Error fetching data", error);
     }
   };
 
   const handleDelete = async (id: number) => {
-    const tokenN = localStorage.getItem("token");
+    const token = localStorage.getItem("token");
+
+    const confirme = window.confirm("Deseja realmente deletar este cartão?");
+
+    if (!confirme) {
+      return;
+    }
     try {
       await api.delete(`/profiles/${id}`, {
         headers: {
-          Authorization: `Bearer ${tokenN}`,
+          Authorization: `Bearer ${token}`,
         },
       });
       if (profiles) {
@@ -73,28 +94,28 @@ const MyCards: React.FC = () => {
   }, [token]);
 
   return (
-    <div className="container-home">
-      <Header mycards={true} />
+    <Container>
+      <Header mycards={true} voltar={false} />
       <h1>Todos os cartões</h1>
-      <div className="cards-home-1">
+      <Cards>
         {profiles.map((item, index) => (
           <>
-            <div className="card-container" key={index}>
-              <div className="cards-front">
-                <div className="caixa1">
+            <CardsContainer key={index}>
+              <CardFront>
+                <Box1>
                   <p>ID: {item.id}</p>
-                  <img src={item.foto} alt="" />
-                </div>
-                <div className="caixa2">
-                  <h4>Nome: {item.nomeCompleto}</h4>
-                  <p>Nome social: {item.nomeSocial}</p>
-                  <p>Nascimento: {item.dataNascimento}</p>
-                  <p>Email: {item.email}</p>
-                  <p>Telefone: {item.telefone}</p>
-                </div>
-              </div>
-              <div className="cards-back">
-                <img src={qrcode} alt="" />
+                  <Image src={item.foto} alt="Imagem de perfil" />
+                </Box1>
+                <Box2>
+                  <H4>{item.nomeCompleto}</H4>
+                  <P>Nome social: {item.nomeSocial}</P>
+                  <P>Nascimento: {item.dataNascimento}</P>
+                  <P>Email: {item.email}</P>
+                  <P>Telefone: {item.telefone}</P>
+                </Box2>
+              </CardFront>
+              <CardBack>
+                <ImageBack src={qrcode} alt="" />
                 <p>
                   <a href={item.redesSociais.linkedin}>
                     <AiFillLinkedin size={30} />
@@ -109,14 +130,16 @@ const MyCards: React.FC = () => {
                     <AiFillFacebook size={30} />
                   </a>
                 </p>
-                <button>EDITAR</button>
-                <button onClick={() => handleDelete(item.id)}>DELETAR</button>
-              </div>
-            </div>
+                <Link to={`/editar/${item.id}`}>
+                  <Button>EDITAR</Button>
+                </Link>
+                <Button onClick={() => handleDelete(item.id)}>DELETAR</Button>
+              </CardBack>
+            </CardsContainer>
           </>
         ))}
-      </div>
-    </div>
+      </Cards>
+    </Container>
   );
 };
 

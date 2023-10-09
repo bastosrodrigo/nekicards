@@ -16,7 +16,7 @@ import {
   Button,
 } from "./styles";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../../components/header";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -29,9 +29,11 @@ import {
   AiFillLinkedin,
 } from "react-icons/ai";
 import api from "../../api";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
-const AdicionarCards = () => {
+const Editar = () => {
+  const { id } = useParams();
+  const [data, setData] = useState<any>([]);
   const [email, setEmail] = useState("");
   const [nomeCompleto, setNomeCompleto] = useState("");
   const [nomeSocial, setNomeSocial] = useState("");
@@ -45,62 +47,40 @@ const AdicionarCards = () => {
   const [validarEmail, setValidarEmail] = useState<boolean>(true);
   const navigate = useNavigate();
   //const { token } = useAuth();
-  const tokenN = localStorage.getItem("token");
 
-  const handleValidEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const email = e.target.value;
-    setEmail(email);
-
-    const emailRegex = /^[\w-]+(\.[\w-]+)*@(neki-it\.com\.br|neki\.com\.br)$/;
-
-    const valido = emailRegex.test(email);
-    setValidarEmail(valido);
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    try {
-      const token = localStorage.getItem("token");
-      if (token) {
-        api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-      } else {
-        console.error("Token não encontrado no Local Storage.");
-        return;
-      }
-      const response = await api.post("/profiles", {
-        email: email,
-        nomeCompleto: nomeCompleto,
-        nomeSocial: nomeSocial,
-        dataNascimento: dataNascimento,
-        foto: foto,
-        telefone: telefone,
-        redesSociais: {
-          linkedin: linkedin,
-          github: github,
-          instagram: instagram,
-          facebook: facebook,
+  const getAll = async () => {
+    const tokenN = localStorage.getItem("token");
+    console.log("TOKEN", tokenN);
+    await api
+      .get("/profiles/" + id, {
+        headers: {
+          Authorization: `Bearer ${tokenN}`,
         },
-      });
-      console.log("Resposta da API:", response.data);
-      toast.success("Perfil criado com sucesso!");
-      setTimeout(() => {
-        navigate("/meuscards");
-
-        setEmail("");
-        setNomeCompleto("");
-        setNomeSocial("");
-        setDataNascimento("");
-        setFoto("");
-        setTelefone("");
-      }, 5000);
-    } catch (error: any) {
-      if (error.response && error.response.status === 409) {
-        toast.error("O email já está em uso. Por favor, escolha outro.");
-      } else {
-        console.error("Erro ao enviar dados para a API:", error);
-      }
-    }
+      })
+      .then((response) => {
+        setData(response.data);
+      })
+      .catch((err) => console.log(err));
   };
+
+  useEffect(() => {
+    getAll();
+  }, []);
+
+  function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    const token = localStorage.getItem("token");
+    if (token) {
+      api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+    } else {
+      console.error("Token não encontrado no Local Storage.");
+      return;
+    }
+    api.put("/profiles/" + id, data).then((response) => {
+      toast.success("Perfil atualizado com sucesso!");
+      navigate("/meuscards");
+    });
+  }
 
   return (
     <>
@@ -110,29 +90,30 @@ const AdicionarCards = () => {
         <Card>
           <CardFront>
             <Box1>
-              <Img src={avatar} alt="Avatar de perfil" />
+              <P>ID: {data.id}</P>
+              <Img src={data.foto} alt="Avatar de perfil" />
             </Box1>
             <Box2>
-              <H4>Nome: {nomeCompleto}</H4>
-              <P>Nome social: {nomeSocial}</P>
-              <P>Nascimento: {dataNascimento}</P>
-              <P>Email: {email}</P>
-              <P>Telefone: {telefone}</P>
+              <H4>Nome: {data.nomeCompleto}</H4>
+              <P>Nome social: {data.nomeSocial}</P>
+              <P>Nascimento: {data.dataNascimento}</P>
+              <P>Email: {data.email}</P>
+              <P>Telefone: {data.telefone}</P>
             </Box2>
           </CardFront>
           <CardBack>
             <CardBackImg src={qrcode} alt="Imagem de um QRCode" />
             <p>
-              <a href={linkedin}>
+              <a href={data.redesSociais?.linkedin}>
                 <AiFillLinkedin size={30} />
               </a>
-              <a href={github}>
+              <a href={data.redesSociais?.github}>
                 <AiFillGithub size={30} />
               </a>
-              <a href={instagram}>
+              <a href={data.redesSociais?.instagram}>
                 <AiFillInstagram size={30} />
               </a>
-              <a href={facebook}>
+              <a href={data.redesSociais?.facebook}>
                 <AiFillFacebook size={30} />
               </a>
             </p>
@@ -145,56 +126,53 @@ const AdicionarCards = () => {
             <Input
               id="email"
               type="email"
-              value={email}
-              onChange={handleValidEmail}
-              required
+              value={data.email}
+              onChange={(e) => setData({ ...data, email: e.target.value })}
+              disabled
             />
-            {!validarEmail && (
-              <p>
-                O email deve terminar com "@neki-it.com.br" ou "@neki.com.br"
-              </p>
-            )}
           </FormDiv>
           <div>
             <Label>Nome Completo*:</Label>
             <Input
               type="text"
-              value={nomeCompleto}
-              onChange={(e) => setNomeCompleto(e.target.value)}
-              required
+              value={data.nomeCompleto}
+              onChange={(e) =>
+                setData({ ...data, nomeCompleto: e.target.value })
+              }
             />
           </div>
           <div>
             <Label>Nome Social:</Label>
             <Input
               type="text"
-              value={nomeSocial}
-              onChange={(e) => setNomeSocial(e.target.value)}
+              value={data.nomeSocial}
+              onChange={(e) => setData({ ...data, nomeSocial: e.target.value })}
             />
           </div>
           <div>
             <Label>Data de Nascimento*:</Label>
             <Input
               type="date"
-              value={dataNascimento}
-              onChange={(e) => setDataNascimento(e.target.value)}
-              required
+              value={data.dataNascimento}
+              onChange={(e) =>
+                setData({ ...data, dataNascimento: e.target.value })
+              }
             />
           </div>
           <div>
             <Label>Foto*:</Label>
             <Input
               type="text"
-              onChange={(e) => setFoto(e.target.value)}
-              required
+              value={data.foto}
+              onChange={(e) => setData({ ...data, foto: e.target.value })}
             />
           </div>
           <div>
             <Label>Telefone:</Label>
             <Input
               type="tel"
-              value={telefone}
-              onChange={(e) => setTelefone(e.target.value)}
+              value={data.telefone}
+              onChange={(e) => setData({ ...data, telefone: e.target.value })}
             />
           </div>
         </Form>
@@ -205,8 +183,8 @@ const AdicionarCards = () => {
             <Label htmlFor="">Linkedin:</Label>
             <Input
               type="text"
-              value={linkedin}
-              onChange={(e) => setLinkedin(e.target.value)}
+              value={data.redesSociais?.linkedin}
+              onChange={(e) => setData({ ...data, linkedin: e.target.value })}
             />
           </div>
           <div>
@@ -214,8 +192,8 @@ const AdicionarCards = () => {
             <Input
               id="github"
               type="text"
-              value={github}
-              onChange={(e) => setGithub(e.target.value)}
+              value={data.redesSociais?.github}
+              onChange={(e) => setData({ ...data, github: e.target.value })}
             />
           </div>
           <div>
@@ -223,8 +201,8 @@ const AdicionarCards = () => {
             <Input
               id="instagram"
               type="text"
-              value={instagram}
-              onChange={(e) => setInstagram(e.target.value)}
+              value={data.redesSociais?.instagram}
+              onChange={(e) => setData({ ...data, instagram: e.target.value })}
             />
           </div>
           <div>
@@ -232,14 +210,12 @@ const AdicionarCards = () => {
             <Input
               id="facebook"
               type="text"
-              value={facebook}
-              onChange={(e) => setFacebook(e.target.value)}
+              value={data.redesSociais?.facebook}
+              onChange={(e) => setData({ ...data, facebook: e.target.value })}
             />
           </div>
 
-          <Button type="submit" disabled={!validarEmail}>
-            Enviar
-          </Button>
+          <Button type="submit">Salvar</Button>
           <ToastContainer />
         </Form>
       </Container>
@@ -247,4 +223,4 @@ const AdicionarCards = () => {
   );
 };
 
-export default AdicionarCards;
+export default Editar;

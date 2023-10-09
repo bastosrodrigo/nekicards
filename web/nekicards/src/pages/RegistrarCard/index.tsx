@@ -11,10 +11,10 @@ import {
 import Header from "../../components/header";
 import "./styles.css";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../contexts/AuthContext";
+//import { useAuth } from "../../contexts/AuthContext";
 
 const RegistrarCard = () => {
-  const { logout } = useAuth();
+  //const { logout } = useAuth();
   const [email, setEmail] = useState("");
   const [nomeCompleto, setNomeCompleto] = useState("");
   const [nomeSocial, setNomeSocial] = useState("");
@@ -77,14 +77,9 @@ const RegistrarCard = () => {
     }
   };
 
-  const handleLogout = () => {
-    logout();
-    navigate("/");
-  };
-
   return (
     <>
-      <Header mycards={false} />
+      <Header mycards={false} voltar={true} />
       <div className="container-home-2">
         <div className="cards-home">
           <div className="cards-front">

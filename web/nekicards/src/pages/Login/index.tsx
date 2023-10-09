@@ -17,6 +17,8 @@ import axios from "axios";
 import { useAuth } from "../../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 import api from "../../api";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   const { login } = useAuth();
@@ -36,7 +38,13 @@ function App() {
         //localStorage.setItem("token", token);
         //console.log("Chegou aqui dentro do IF", token);
         login(token);
-        navigate("/meuscards");
+
+        toast.success("Login feito com sucesso!");
+        setTimeout(() => {
+          {
+            navigate("/meuscards");
+          }
+        }, 2000);
       } else {
         console.error("Falha no login");
       }
@@ -76,6 +84,7 @@ function App() {
             <Button onClick={handleLogin}>ENTRAR</Button>
           </Form>
         </Direita>
+        <ToastContainer />
       </Box>
     </Container>
   );

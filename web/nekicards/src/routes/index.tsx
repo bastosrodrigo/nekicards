@@ -6,19 +6,24 @@ import Registrar from "../pages/Registrar";
 import Publico from "../pages/Publico";
 import MeusCards from "../pages/MeusCards";
 import AdicionarCards from "../pages/AdicionarCards";
+import Editar from "../pages/Editar";
+import AuthProvider from "../contexts/AuthContext1";
 
 const AppRoutes = () => {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/regiscard" element={<RegistrarCard />} />
-        <Route path="/" element={<Login />} />
-        <Route path="/registrar" element={<Registrar />} />
-        <Route path="/meuscards" element={<MeusCards />} />
-        <Route path="/profile/:id" element={<Publico />} />
-        <Route path="/adicionar" element={<AdicionarCards />} />
-      </Routes>
-    </BrowserRouter>
+    <AuthProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/regiscard" element={<RegistrarCard />} />
+          <Route path="/" element={<Login />} />
+          <Route path="/registrar" element={<Registrar />} />
+          <Route path="/meuscards" element={<MeusCards />} />
+          <Route path="/profile/:id" element={<Publico />} />
+          <Route path="/adicionar" element={<AdicionarCards />} />
+          <Route path="/editar/:id" element={<Editar />} />
+        </Routes>
+      </BrowserRouter>
+    </AuthProvider>
   );
 };
 

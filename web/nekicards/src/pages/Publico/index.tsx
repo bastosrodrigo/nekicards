@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import qrcode from "../../assets/qrcode.png";
 import { useParams } from "react-router-dom";
 import {
   AiFillFacebook,
@@ -9,12 +9,19 @@ import {
 } from "react-icons/ai";
 
 import "./styles.css";
+import api from "../../api";
 
 interface Profile {
   id: number;
   nomeCompleto: string;
   email: string;
   telefone: string;
+  redesSociais: {
+    linkedin: string;
+    github: string;
+    instagram: string;
+    facebook: string;
+  };
 }
 
 const Publico: React.FC = () => {
@@ -24,8 +31,8 @@ const Publico: React.FC = () => {
   const [isFront, setIsFront] = useState(true);
 
   useEffect(() => {
-    axios
-      .get(`http://localhost:8080/profiles/${id}`)
+    api
+      .get(`/profiles/${id}`)
       .then((response) => {
         setProfile(response.data);
         console.log(response.data);
@@ -38,56 +45,56 @@ const Publico: React.FC = () => {
   return (
     <div className="container">
       <div className="box">
-        <h1>Compartilhe seu card com seus amigos</h1>
+        <h1>Compartilhe seu cartão com seus amigos!</h1>
         <div className="card">
           <div className={isFront ? "front" : "back"}>
             {isFront ? (
-              <div>
-                <div className="img">
-                  <img
-                    src="https://cdn-icons-png.flaticon.com/512/4794/4794936.png"
-                    alt=""
-                  />
+              <div className="cards-home">
+                <div className="cards-front">
+                  <div className="caixa1">
+                    <p>ID: {profile.id}</p>
+                    <img src={profile.foto} alt="" />
+                  </div>
+                  <div className="caixa2">
+                    <h4>{profile.nomeCompleto}</h4>
+                    <p>Nome social: {profile.nomeSocial}</p>
+                    <p>Nascimento: {profile.dataNascimento}</p>
+                    <p>Email: {profile.email}</p>
+                    <p>Telefone: {profile.telefone}</p>
+                  </div>
                 </div>
-                <p>Frente do cartão 1</p>
-                <p>Telefone: {profile.telefone}</p>
               </div>
             ) : (
-              <div>
-                <p>Frente do cartão 1</p>
-                <p>Telefone: {profile.telefone}</p>
-              </div>
+              <div></div>
             )}
           </div>
           <div className={isFront ? "back" : "front"}>
             {isFront ? (
-              <div>
-                <p>Verso do cartão 2</p>
-                <p>ID: {profile.id}</p>
-                <nav className="rede-sociais">
-                  <a href={profile.id}>
-                    <AiFillLinkedin size={30} />
-                  </a>
-                  <a href={profile.id}>
-                    <AiFillGithub size={30} />
-                  </a>
-                  <a href={profile.id}>
-                    <AiFillInstagram size={30} />
-                  </a>
-                  <a href={profile.id}>
-                    <AiFillFacebook size={30} />
-                  </a>
-                </nav>
+              <div className="cards-home">
+                <div className="cards-back">
+                  <img src={qrcode} alt="" />
+                  <p>
+                    <a href={profile.linkedin}>
+                      <AiFillLinkedin size={30} />
+                    </a>
+                    <a href={profile.github}>
+                      <AiFillGithub size={30} />
+                    </a>
+                    <a href={profile.instagram}>
+                      <AiFillInstagram size={30} />
+                    </a>
+                    <a href={profile.facebook}>
+                      <AiFillFacebook size={30} />
+                    </a>
+                  </p>
+                </div>
               </div>
             ) : (
-              <div>
-                <p>Verso do cartão 2</p>
-                <p>ID: {profile.id}</p>
-              </div>
+              <div></div>
             )}
           </div>
         </div>
-        <p>Passe o mouse no card</p>
+        <p>Passe o mouse no cartão</p>
       </div>
     </div>
   );

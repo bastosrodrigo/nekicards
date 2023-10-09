@@ -1,37 +1,11 @@
-import {
-  Container,
-  Card,
-  CardFront,
-  Img,
-  Box1,
-  Box2,
-  H4,
-  P,
-  CardBack,
-  CardBackImg,
-  Form,
-  Input,
-  FormDiv,
-  Label,
-  Button,
-} from "./styles";
-
-import React, { useState } from "react";
-import Header from "../../components/header";
-import { ToastContainer, toast } from "react-toastify";
+import React, { useState, useEffect } from "react";
+import "./styles.css";
 import "react-toastify/dist/ReactToastify.css";
-import avatar from "../../assets/avatar.png";
-import qrcode from "../../assets/qrcode.png";
-import {
-  AiFillFacebook,
-  AiFillGithub,
-  AiFillInstagram,
-  AiFillLinkedin,
-} from "react-icons/ai";
 import api from "../../api";
+import { ToastContainer, toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
-const AdicionarCards = () => {
+const Modal = ({ isOpen, onClose, onSave }: any) => {
   const [email, setEmail] = useState("");
   const [nomeCompleto, setNomeCompleto] = useState("");
   const [nomeSocial, setNomeSocial] = useState("");
@@ -84,7 +58,7 @@ const AdicionarCards = () => {
       console.log("Resposta da API:", response.data);
       toast.success("Perfil criado com sucesso!");
       setTimeout(() => {
-        navigate("/meuscards");
+        onClose();
 
         setEmail("");
         setNomeCompleto("");
@@ -92,6 +66,10 @@ const AdicionarCards = () => {
         setDataNascimento("");
         setFoto("");
         setTelefone("");
+        setLinkedin("");
+        setGithub("");
+        setInstagram("");
+        setFacebook("");
       }, 5000);
     } catch (error: any) {
       if (error.response && error.response.status === 409) {
@@ -103,47 +81,13 @@ const AdicionarCards = () => {
   };
 
   return (
-    <>
-      <Header mycards={false} voltar={true} />
-      <Container>
-        <h1>ADICIONAR CARTÃO</h1>
-        <Card>
-          <CardFront>
-            <Box1>
-              <Img src={avatar} alt="Avatar de perfil" />
-            </Box1>
-            <Box2>
-              <H4>Nome: {nomeCompleto}</H4>
-              <P>Nome social: {nomeSocial}</P>
-              <P>Nascimento: {dataNascimento}</P>
-              <P>Email: {email}</P>
-              <P>Telefone: {telefone}</P>
-            </Box2>
-          </CardFront>
-          <CardBack>
-            <CardBackImg src={qrcode} alt="Imagem de um QRCode" />
-            <p>
-              <a href={linkedin}>
-                <AiFillLinkedin size={30} />
-              </a>
-              <a href={github}>
-                <AiFillGithub size={30} />
-              </a>
-              <a href={instagram}>
-                <AiFillInstagram size={30} />
-              </a>
-              <a href={facebook}>
-                <AiFillFacebook size={30} />
-              </a>
-            </p>
-          </CardBack>
-        </Card>
-        <H4>Dados pessoais:</H4>
-        <Form onSubmit={handleSubmit}>
-          <FormDiv>
-            <Label htmlFor="email">E-mail*:</Label>
-            <Input
-              id="email"
+    <div className={`modal ${isOpen ? "open" : "closed"}`}>
+      <div className="modal-content">
+        <span>Cadastrar novo cartão</span>
+        <form onSubmit={handleSubmit} className="form-home">
+          <div>
+            <label>E-mail*:</label>
+            <input
               type="email"
               value={email}
               onChange={handleValidEmail}
@@ -154,10 +98,10 @@ const AdicionarCards = () => {
                 O email deve terminar com "@neki-it.com.br" ou "@neki.com.br"
               </p>
             )}
-          </FormDiv>
+          </div>
           <div>
-            <Label>Nome Completo*:</Label>
-            <Input
+            <label>Nome Completo*:</label>
+            <input
               type="text"
               value={nomeCompleto}
               onChange={(e) => setNomeCompleto(e.target.value)}
@@ -165,86 +109,63 @@ const AdicionarCards = () => {
             />
           </div>
           <div>
-            <Label>Nome Social:</Label>
-            <Input
+            <label>Nome Social:</label>
+            <input
               type="text"
               value={nomeSocial}
               onChange={(e) => setNomeSocial(e.target.value)}
             />
           </div>
           <div>
-            <Label>Data de Nascimento*:</Label>
-            <Input
-              type="date"
+            <label>Data de Nascimento*:</label>
+            <input
+              type="text"
               value={dataNascimento}
               onChange={(e) => setDataNascimento(e.target.value)}
               required
             />
           </div>
           <div>
-            <Label>Foto*:</Label>
-            <Input
+            <label>Foto*:</label>
+            <input
               type="text"
               onChange={(e) => setFoto(e.target.value)}
               required
             />
           </div>
           <div>
-            <Label>Telefone:</Label>
-            <Input
+            <label>Telefone:</label>
+            <input
               type="tel"
               value={telefone}
               onChange={(e) => setTelefone(e.target.value)}
             />
           </div>
-        </Form>
-
-        <h4>Redes Sociais:</h4>
-        <Form onSubmit={handleSubmit}>
           <div>
-            <Label htmlFor="">Linkedin:</Label>
-            <Input
-              type="text"
-              value={linkedin}
-              onChange={(e) => setLinkedin(e.target.value)}
-            />
+            <label htmlFor="">Linkedin:</label>
+            <input type="text" />
           </div>
           <div>
-            <Label htmlFor="github">Github:</Label>
-            <Input
-              id="github"
-              type="text"
-              value={github}
-              onChange={(e) => setGithub(e.target.value)}
-            />
+            <label htmlFor="">Github:</label>
+            <input type="text" />
           </div>
           <div>
-            <Label htmlFor="instagram">Instagram:</Label>
-            <Input
-              id="instagram"
-              type="text"
-              value={instagram}
-              onChange={(e) => setInstagram(e.target.value)}
-            />
+            <label htmlFor="">Instagram:</label>
+            <input type="text" />
           </div>
           <div>
-            <Label htmlFor="facebook">Facebook:</Label>
-            <Input
-              id="facebook"
-              type="text"
-              value={facebook}
-              onChange={(e) => setFacebook(e.target.value)}
-            />
+            <label htmlFor="">Facebook:</label>
+            <input type="text" />
           </div>
-
-          <Button type="submit" disabled={!validarEmail}>
-            Enviar
-          </Button>
-          <ToastContainer />
-        </Form>
-      </Container>
-    </>
+        </form>
+        <button onClick={handleSubmit} disabled={!validarEmail}>
+          Salvar
+        </button>
+        <button onClick={onClose}>Cancelar</button>
+      </div>
+      <ToastContainer />
+    </div>
   );
 };
 
-export default AdicionarCards;
+export default Modal;
