@@ -69,7 +69,7 @@ const AdicionarCards = () => {
   return (
     <View style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
-        <Text style={styles.title}>AdicionarCards</Text>
+        <Text style={styles.title}>Adicionar +</Text>
         <View>
           <Text style={styles.subtitle}>Email</Text>
           <TextInput
@@ -161,7 +161,7 @@ const AdicionarCards = () => {
           />
         </View>
         <TouchableOpacity style={styles.button} onPress={handleSubmit}>
-          <Text>Adicionar</Text>
+          <Text style={styles.btn}>Adicionar</Text>
         </TouchableOpacity>
       </ScrollView>
     </View>
@@ -179,6 +179,7 @@ const styles = StyleSheet.create({
   },
   input: {
     height: 30,
+    width: 300,
     backgroundColor: "#fff",
     marginBottom: 10,
     paddingLeft: 5,

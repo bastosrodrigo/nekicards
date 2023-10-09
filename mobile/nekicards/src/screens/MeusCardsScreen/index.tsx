@@ -100,29 +100,57 @@ const MeusCards: React.FC = () => {
                 <Text style={styles.label}>Nome Social: </Text>
                 <Text style={styles.subtitle}>{item.nomeSocial}</Text>
               </Text>
-              <Text style={styles.subtitle}>Email: {item.email}</Text>
-              <Text style={styles.subtitle}>
-                Nascimento: {item.dataNascimento}
+              <Text>
+                <Text style={styles.label}>Email: </Text>
+                <Text style={styles.subtitle}>{item.email}</Text>
               </Text>
-              <Text style={styles.subtitle}>Telefone: {item.telefone}</Text>
-              <Text style={styles.subtitle}>{item.redesSociais.facebook}</Text>
-              <Text>{item.redesSociais.github}</Text>
-              <Text>{item.redesSociais.instagram}</Text>
-              <Text>{item.redesSociais.linkedin}</Text>
-              <TouchableOpacity
-                style={styles.button}
-                onPress={() =>
-                  navigation.navigate("EditarCards", { id: item.id })
-                }
-              >
-                <Text>Editar</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.button}
-                onPress={() => handleDeletar(item.id)}
-              >
-                <Text>Excluir</Text>
-              </TouchableOpacity>
+              <Text>
+                <Text style={styles.label}>Nascimento: </Text>
+                <Text style={styles.subtitle}>{item.dataNascimento}</Text>
+              </Text>
+              <Text>
+                <Text style={styles.label}>Telefone: </Text>
+                <Text style={styles.subtitle}>{item.telefone}</Text>
+              </Text>
+              <Text>
+                <Text style={styles.label}>Facebook: </Text>
+                <Text style={styles.subtitle}>
+                  {item.redesSociais.facebook}
+                </Text>
+              </Text>
+              <Text>
+                <Text style={styles.label}>Github: </Text>
+                <Text style={styles.subtitle}>{item.redesSociais.github}</Text>
+              </Text>
+              <Text>
+                <Text style={styles.label}>Instagram: </Text>
+                <Text style={styles.subtitle}>
+                  {item.redesSociais.instagram}
+                </Text>
+              </Text>
+              <Text>
+                <Text style={styles.label}>Linkedin: </Text>
+                <Text style={styles.subtitle}>
+                  {item.redesSociais.linkedin}
+                </Text>
+              </Text>
+
+              <View style={styles.buttonContainer}>
+                <TouchableOpacity
+                  style={styles.button}
+                  onPress={() =>
+                    navigation.navigate("EditarCards", { id: item.id })
+                  }
+                >
+                  <Text style={styles.btn}>Editar</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.button}
+                  onPress={() => handleDeletar(item.id)}
+                >
+                  <Text style={styles.btn}>Excluir</Text>
+                </TouchableOpacity>
+              </View>
             </View>
           </View>
         )}
@@ -163,10 +191,9 @@ const styles = StyleSheet.create({
     backgroundColor: "#8f9ddb",
   },
   button: {
-    display: "flex",
-    alignItems: "center",
+    flex: 1,
     justifyContent: "center",
-    flexDirection: "column",
+    alignItems: "center",
   },
   imagem: {
     width: 100,
@@ -191,4 +218,16 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   subtitle: {},
+  btn: {
+    backgroundColor: "#04050d",
+    padding: 3,
+    paddingLeft: 10,
+    paddingRight: 10,
+    marginTop: 5,
+    borderRadius: 5,
+    color: "#fff",
+  },
+  buttonContainer: {
+    flexDirection: "row",
+  },
 });

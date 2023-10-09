@@ -114,7 +114,13 @@ function TabNavigator() {
 function StackNavigator() {
   return (
     <Stack.Navigator initialRouteName="Login">
-      <Stack.Screen name="Login" component={Login} />
+      <Stack.Screen
+        name="Login"
+        component={Login}
+        options={{
+          headerShown: false,
+        }}
+      />
       <Stack.Screen name="EditarCards" component={EditarCards} />
     </Stack.Navigator>
   );

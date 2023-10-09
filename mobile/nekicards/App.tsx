@@ -1,13 +1,14 @@
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
+import { NavigationContainer } from "@react-navigation/native";
+import Toast from "react-native-toast-message";
 import { AuthProvider } from "./src/contexts/AuthContext";
-import Login from "./src/screens/LoginScreen";
 import Routes from "./src/routes";
 
 export default function App() {
   return (
     <AuthProvider>
+      <Toast />
       <Routes />
+      <Toast />
     </AuthProvider>
   );
 }
