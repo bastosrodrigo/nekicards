@@ -5,8 +5,6 @@ export const Container = styled.div`
   align-items: center;
   flex-direction: column;
   margin-top: 100px;
-  width: 100vw;
-  background-color: #d0d6ff;
   overflow-x: none;
 `;
 
@@ -23,6 +21,10 @@ export const CardsContainer = styled.div`
   display: flex;
   justify-content: space-between;
   gap: 20px;
+
+  @media (max-width: 425px) {
+    flex-direction: column;
+  }
 `;
 
 export const CardFront = styled.div`
@@ -30,7 +32,12 @@ export const CardFront = styled.div`
   height: 200px;
   background-color: #a1aeff;
   border-radius: 10px;
+  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
   display: flex;
+
+  @media (max-width: 320px) {
+    width: 320px;
+  }
 `;
 
 export const Image = styled.img`
@@ -61,11 +68,16 @@ export const CardBack = styled.div`
   width: 350px;
   height: 200px;
   background-color: #a1aeff;
+  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
   border-radius: 10px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  @media (max-width: 320px) {
+    width: 320px;
+  }
 `;
 
 export const H4 = styled.h4`

@@ -15,13 +15,13 @@ import {
 import logo from "../../assets/logo.png";
 import axios from "axios";
 import { useAuth } from "../../contexts/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import api from "../../api";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function App() {
-  const { login } = useAuth();
+  const { login, isAuthenticated } = useAuth();
   const [email, setEmail] = useState<string>("");
   const [senha, setSenha] = useState<string>("");
 
@@ -52,7 +52,6 @@ function App() {
       console.error("Erro durante o login:", error);
     }
   };
-
   return (
     <Container>
       <Box>

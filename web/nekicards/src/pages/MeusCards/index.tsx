@@ -130,7 +130,10 @@ const MyCards: React.FC = () => {
                     <AiFillFacebook size={30} />
                   </a>
                 </p>
-                <Link to={`/editar/${item.id}`}>
+                <Link
+                  to={`/editar/${item.id}`}
+                  style={{ textDecoration: "none" }}
+                >
                   <Button>EDITAR</Button>
                 </Link>
                 <Button onClick={() => handleDelete(item.id)}>DELETAR</Button>

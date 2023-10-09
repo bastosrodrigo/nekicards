@@ -11,10 +11,11 @@ interface Props {
 }
 const Header = ({ mycards, voltar }: Props) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { logout } = useAuth();
+  const { logout, isAuthenticated } = useAuth();
   const navigate = useNavigate();
 
   const handleLogout = () => {
+    localStorage.removeItem("token");
     logout();
     navigate("/");
   };
@@ -37,12 +38,19 @@ const Header = ({ mycards, voltar }: Props) => {
           <>
             {mycards && <Button onClick={handleAddClick}>+ Card</Button>}
             {voltar && (
-              <Link to="/meuscards">
+              <Link to="/meuscards" style={{ textDecoration: "none" }}>
                 <Button>Voltar</Button>
               </Link>
             )}
           </>
-          <Button onClick={handleLogout}>Sair</Button>
+          {isAuthenticated() ? (
+            <Button onClick={handleLogout}>Sair</Button>
+          ) : (
+            <Link to="/login" style={{ textDecoration: "none" }}>
+              <Button>Entrar</Button>
+            </Link>
+          )}
+          {/* <Button onClick={handleLogout}>Sair</Button> */}
         </Nav>
         <Modal isOpen={isModalOpen} onClose={handleModalClose} />
       </HeaderStyled>

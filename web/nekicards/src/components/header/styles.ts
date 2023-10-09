@@ -32,9 +32,9 @@ export const Button = styled.button`
   padding: 10px;
   cursor: pointer;
 
-  :hover {
+  &:hover {
     background-color: #766d88;
-    color: #fff;
+    color: #000;
     transition: 0.5s;
   }
 `;

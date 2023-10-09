@@ -18,6 +18,10 @@ export const Box = styled.div`
   height: 500px;
   background-color: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+  @media (max-width: 425px) {
+    flex-direction: column;
+  }
 `;
 
 export const Esquerda = styled.div`
@@ -28,6 +32,10 @@ export const Esquerda = styled.div`
 export const Imagem = styled.img`
   max-width: 100%;
   height: auto;
+
+  @media (max-width: 425px) {
+    width: 200px;
+  }
 `;
 
 export const Direita = styled.div`
@@ -63,6 +71,7 @@ export const Input = styled.input`
 
 export const Button = styled.button`
   background-color: #b09cc2;
+  color: #000;
   border-radius: 5px;
   font-weight: bold;
   margin-bottom: 10px;
@@ -71,7 +80,7 @@ export const Button = styled.button`
   width: 100%;
   cursor: pointer;
 
-  :hover {
+  &:hover {
     background-color: #766d88;
     color: #fff;
     transition: 0.5s;
