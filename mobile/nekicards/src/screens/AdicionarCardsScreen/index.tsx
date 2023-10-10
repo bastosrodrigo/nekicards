@@ -9,6 +9,8 @@ import {
 } from "react-native";
 import api from "../../api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import Toast from "react-native-toast-message";
+import { useNavigation } from "@react-navigation/native";
 
 const AdicionarCards = () => {
   const [email, setEmail] = useState("");
@@ -21,6 +23,8 @@ const AdicionarCards = () => {
   const [github, setGithub] = useState("");
   const [instagram, setInstagram] = useState("");
   const [facebook, setFacebook] = useState("");
+
+  const navigator: any = useNavigation();
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -49,6 +53,11 @@ const AdicionarCards = () => {
         },
       });
       console.log("Resposta da API:", response.data);
+
+      Toast.show({
+        type: "success",
+        text1: "Cartã criado com sucesso!",
+      });
       setTimeout(() => {
         setEmail("");
         setNomeCompleto("");
@@ -57,9 +66,14 @@ const AdicionarCards = () => {
         setFoto("");
         setTelefone("");
       }, 5000);
+      navigator.navigate("MeusCards");
     } catch (error: any) {
       if (error.response && error.response.status === 409) {
         console.error("O email já está em uso. Por favor, escolha outro.");
+        Toast.show({
+          type: "error",
+          text1: "O email já está em uso. Por favor, escolha outro.",
+        });
       } else {
         console.error("Erro ao enviar dados para a API:", error);
       }

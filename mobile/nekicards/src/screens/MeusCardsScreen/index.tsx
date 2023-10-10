@@ -33,6 +33,7 @@ interface CardItem {
 const MeusCards: React.FC = () => {
   const [data, setData] = useState<CardItem[]>([]);
   const navigation = useNavigation<AppNavigatorRoutesProps>();
+  const [reload, setReload] = useState<boolean>(false);
 
   const getAllCards = async () => {
     try {
@@ -86,8 +87,11 @@ const MeusCards: React.FC = () => {
   };
 
   useEffect(() => {
+    if (reload) {
+      setReload(false);
+    }
     getAllCards();
-  }, []);
+  }, [reload, navigation]);
 
   return (
     <View style={styles.container}>
