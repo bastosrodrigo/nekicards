@@ -34,7 +34,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
     }
   };
 
-  const logout = () => {};
+  const logout = () => {
+    setToken(null);
+    AsyncStorage.removeItem("token");
+  };
 
   const isAuthenticated = () => {
     return !!token;

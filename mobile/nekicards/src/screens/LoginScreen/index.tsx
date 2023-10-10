@@ -9,6 +9,7 @@ import {
   ActivityIndicator,
 } from "react-native";
 import { useAuth } from "../../contexts/AuthContext";
+import Toast from "react-native-toast-message";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import api from "../../api";
 
@@ -20,15 +21,23 @@ const Login = ({ navigation }: any) => {
 
   const handleLogin = async () => {
     try {
-      setLoading(true);
-      login(email, senha);
-      const token = await AsyncStorage.getItem("token");
-      api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-      navigation.navigate("MeusCards");
+      const response = await api.post("/login", { email, senha });
+      if (response.status === 200) {
+        const { token } = response.data;
+        api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+        console.log("TOKEN AUTHCONTEXT", token);
+        await AsyncStorage.setItem("token", token);
+        Toast.show({
+          type: "success",
+          text1: "Login realizado com sucesso!",
+        });
+        navigation.navigate("MeusCards");
+      }
     } catch (error) {
-      console.log(error);
-    } finally {
-      setLoading(false);
+      Toast.show({
+        type: "error",
+        text1: "Email ou senha inválida!",
+      });
     }
   };
 
