@@ -33,17 +33,6 @@ import { useNavigate, useParams } from "react-router-dom";
 const Editar = () => {
   const { id } = useParams();
   const [data, setData] = useState<any>([]);
-  const [email, setEmail] = useState("");
-  const [nomeCompleto, setNomeCompleto] = useState("");
-  const [nomeSocial, setNomeSocial] = useState("");
-  const [dataNascimento, setDataNascimento] = useState("");
-  const [foto, setFoto] = useState("");
-  const [telefone, setTelefone] = useState("");
-  const [linkedin, setLinkedin] = useState("");
-  const [github, setGithub] = useState("");
-  const [instagram, setInstagram] = useState("");
-  const [facebook, setFacebook] = useState("");
-  const [validarEmail, setValidarEmail] = useState<boolean>(true);
   const navigate = useNavigate();
   //const { token } = useAuth();
 

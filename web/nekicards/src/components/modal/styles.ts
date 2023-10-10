@@ -47,15 +47,20 @@ export const Label = styled.label`
 export const Div = styled.div``;
 
 export const Button = styled.button`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 10px 20px;
-  background-color: #7979bc;
-  color: #fff;
+  background-color: #b09cc2;
+  border-radius: 5px;
+  font-weight: bold;
+  margin-bottom: 10px;
   border: none;
-  border-radius: 4px;
+  padding: 10px;
+  text-transform: uppercase;
   cursor: pointer;
+
+  &:hover {
+    background-color: #766d88;
+    color: #000;
+    transition: 0.5s;
+  }
 `;
 
 export const DivButton = styled.div`
