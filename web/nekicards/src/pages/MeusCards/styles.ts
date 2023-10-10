@@ -4,9 +4,7 @@ export const Container = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
-  background-color: #d0d6ff;
   margin-top: 100px;
-  overflow-x: none;
 `;
 
 export const Cards = styled.div`
@@ -43,7 +41,7 @@ export const CardFront = styled.div`
 
 export const Image = styled.img`
   height: 90px;
-  width: auto;
+  width: 90px;
   flex-shrink: 0;
   border-radius: 5px;
   margin-left: 5px;

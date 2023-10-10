@@ -8,6 +8,7 @@ import {
   StyleSheet,
 } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
+import Toast from "react-native-toast-message";
 import api from "../../api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -43,6 +44,10 @@ const EditarCards = () => {
     }
     try {
       const response = await api.put("/profiles/" + id, data);
+      Toast.show({
+        type: "success",
+        text1: "Perfil atualizado com sucesso!",
+      });
       console.log("Perfil atualizado com sucesso!", response.data);
       navigate.navigate("MeusCards");
     } catch (error) {

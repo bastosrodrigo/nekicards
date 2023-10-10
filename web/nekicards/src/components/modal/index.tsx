@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./styles.css";
 import "react-toastify/dist/ReactToastify.css";
 import api from "../../api";
 import { ToastContainer, toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
 import {
   Button,
   Div,
@@ -28,9 +27,6 @@ const Modal = ({ isOpen, onClose, onSave }: any) => {
   const [instagram, setInstagram] = useState("");
   const [facebook, setFacebook] = useState("");
   const [validarEmail, setValidarEmail] = useState<boolean>(true);
-  const navigate = useNavigate();
-  //const { token } = useAuth();
-  const tokenN = localStorage.getItem("token");
 
   const handleValidEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
     const email = e.target.value;
@@ -70,7 +66,6 @@ const Modal = ({ isOpen, onClose, onSave }: any) => {
       toast.success("Perfil criado com sucesso!");
       setTimeout(() => {
         onClose();
-
         setEmail("");
         setNomeCompleto("");
         setNomeSocial("");

@@ -66,7 +66,7 @@ const Publico: React.FC = () => {
             ) : (
               <div className="cards-home">
                 <div className="cards-back">
-                  <img src={qrcode} alt="" />
+                  <img src={qrcode} alt="Imagem de QRCode" />
                   <p>
                     <a href={profile.linkedin}>
                       <AiFillLinkedin size={30} />

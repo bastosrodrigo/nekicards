@@ -13,7 +13,6 @@ import {
   Button,
 } from "./styles";
 import logo from "../../assets/logo.png";
-import axios from "axios";
 import { useAuth } from "../../contexts/AuthContext";
 import { Navigate, useNavigate } from "react-router-dom";
 import api from "../../api";
@@ -52,41 +51,46 @@ function App() {
       console.error("Erro durante o login:", error);
     }
   };
-  return (
-    <Container>
-      <Box>
-        <Esquerda>
-          <Imagem src={logo} alt="" />
-        </Esquerda>
-        <Direita>
-          <H3>Faça aqui seu login.</H3>
-          <Form>
-            <Label htmlFor="email">Digite seu email</Label>
-            <Input
-              type="text"
-              id="email"
-              value={email}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                setEmail(e.target.value)
-              }
-            />
 
-            <Label htmlFor="senha">Digite sua senha</Label>
-            <Input
-              type="password"
-              id="senha"
-              value={senha}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                setSenha(e.target.value)
-              }
-            />
-            <Button onClick={handleLogin}>ENTRAR</Button>
-          </Form>
-        </Direita>
-        <ToastContainer />
-      </Box>
-    </Container>
-  );
+  if (!isAuthenticated()) {
+    return (
+      <Container>
+        <Box>
+          <Esquerda>
+            <Imagem src={logo} alt="" />
+          </Esquerda>
+          <Direita>
+            <H3>Faça aqui seu login.</H3>
+            <Form>
+              <Label htmlFor="email">Digite seu email</Label>
+              <Input
+                type="text"
+                id="email"
+                value={email}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setEmail(e.target.value)
+                }
+              />
+
+              <Label htmlFor="senha">Digite sua senha</Label>
+              <Input
+                type="password"
+                id="senha"
+                value={senha}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setSenha(e.target.value)
+                }
+              />
+              <Button onClick={handleLogin}>ENTRAR</Button>
+            </Form>
+          </Direita>
+          <ToastContainer />
+        </Box>
+      </Container>
+    );
+  } else {
+    return <Navigate to="/meuscards" />;
+  }
 }
 
 export default App;

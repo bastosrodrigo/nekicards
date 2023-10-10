@@ -1,12 +1,3 @@
-.container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgb(6, 4, 19);
-}
-
 .box {
   display: flex;
   justify-content: center;
@@ -19,29 +10,12 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.content-esquerda {
-  flex: 1;
-  text-align: center;
-}
-
-.content-esquerda img {
-  max-width: 100%;
-  height: auto;
-}
-
-.content-direita {
-  flex: 1;
-  padding: 20px;
-}
-
-/* Cartão de visita */
 .card {
   width: 350px;
   height: 200px;
   perspective: 1000px;
 }
 
-/* Frente do cartão */
 .front {
   width: 100%;
   height: 100%;
@@ -53,7 +27,6 @@
   transition: transform 0.5s;
 }
 
-/* Verso do cartão */
 .back {
   width: 100%;
   height: 100%;
@@ -66,44 +39,12 @@
   transition: transform 0.5s;
 }
 
-/* Efeito de virar o cartão */
 .card:hover .front {
   transform: rotateY(180deg);
 }
 
 .card:hover .back {
   transform: rotateY(0deg);
-}
-
-.img img {
-  width: 90px;
-}
-
-.rede-sociais {
-  display: flex;
-  justify-content: center;
-  gap: 40px;
-}
-
-.container-home-2 {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  width: 100vw;
-  height: 100vh;
-  background-color: #e0ecab;
-  overflow-x: none;
-}
-
-.box-home {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 10px;
-  width: 800px;
-  height: 500px;
-  background-color: beige;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .cards-home {
@@ -123,7 +64,7 @@
 
 .cards-front img {
   height: 90px;
-  width: auto;
+  width: 90px;
   flex-shrink: 0;
   border-radius: 5px;
   margin-left: 5px;
@@ -137,6 +78,7 @@
 
 .caixa1 img {
   width: 90px;
+  height: 90px;
 }
 
 .caixa2 {
@@ -153,15 +95,9 @@
   margin: 5px;
 }
 
-.email {
-  width: 226px;
-  height: 21px;
-  flex-shrink: 0;
-}
-
 .cards-front img {
-  height: 100px;
-  width: auto;
+  height: 90px;
+  width: 90px;
   flex-shrink: 0;
 }
 
@@ -179,15 +115,6 @@
 .cards-back img {
   width: 50px;
   height: 50px;
-}
-
-.form-home {
-  display: grid;
-  grid-template-columns: 100% 100%;
-  gap: 20px;
-  justify-content: center;
-  flex-direction: column;
-  width: 300px;
 }
 
 .divtitle {

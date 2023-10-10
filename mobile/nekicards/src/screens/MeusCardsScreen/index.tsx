@@ -10,6 +10,7 @@ import {
   Alert,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import Toast from "react-native-toast-message";
 import api from "../../api";
 import { AppNavigatorRoutesProps } from "../../routes";
 
@@ -67,6 +68,11 @@ const MeusCards: React.FC = () => {
               },
             });
             setData(data.filter((item) => item.id !== id));
+            Toast.show({
+              type: "success",
+              text1: "Cartão excluído com sucesso!",
+            });
+            navigation.navigate("MeusCards");
           } catch (error) {
             console.log(error);
           }

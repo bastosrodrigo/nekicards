@@ -49,6 +49,7 @@ interface Profiles {
 
 const MyCards: React.FC = () => {
   const [profiles, setProfiles] = useState<Profiles[]>([]);
+  const [contador, setContador] = useState(0);
   const { token } = useAuth();
 
   const handleGetAll = async () => {
