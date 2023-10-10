@@ -28,6 +28,7 @@ export const CardFront = styled.div`
   background-color: #a1aeff;
   border-radius: 10px;
   display: flex;
+  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
 `;
 
 export const Img = styled.img`
@@ -67,6 +68,7 @@ export const CardBack = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
 `;
 
 export const CardBackImg = styled.img`
