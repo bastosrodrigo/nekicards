@@ -12,6 +12,10 @@ import {
   H4,
   P,
   Button,
+  H1,
+  DivTitle,
+  Span,
+  Ptitle,
 } from "./styles";
 import {
   AiFillLinkedin,
@@ -19,13 +23,13 @@ import {
   AiFillInstagram,
   AiFillFacebook,
 } from "react-icons/ai";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import qrcode from "../../assets/qrcode.png";
 import { useEffect, useState } from "react";
-import axios from "axios";
 import { useAuth } from "../../contexts/AuthContext";
 import api from "../../api";
 import { Link } from "react-router-dom";
-import Modal from "../../components/modal";
 
 interface Profiles {
   id: number;
@@ -45,21 +49,17 @@ interface Profiles {
 
 const MyCards: React.FC = () => {
   const [profiles, setProfiles] = useState<Profiles[]>([]);
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const { token } = useAuth();
 
   const handleGetAll = async () => {
     const tokenN = localStorage.getItem("token");
     console.log(tokenN);
     try {
-      const response = await axios.get<Profiles[]>(
-        "http://localhost:8080/profiles",
-        {
-          headers: {
-            Authorization: `Bearer ${tokenN}`,
-          },
-        }
-      );
+      const response = await api.get<Profiles[]>("/profiles", {
+        headers: {
+          Authorization: `Bearer ${tokenN}`,
+        },
+      });
       setProfiles(response.data);
     } catch (error) {
       console.error("Error fetching data", error);
@@ -84,6 +84,7 @@ const MyCards: React.FC = () => {
         const newProfiles = profiles.filter((item) => item.id !== id);
         setProfiles(newProfiles);
       }
+      toast.success("Cartão excluído com sucesso!");
     } catch (error) {
       console.log("Erro ao deletar card", error);
     }
@@ -96,7 +97,7 @@ const MyCards: React.FC = () => {
   return (
     <Container>
       <Header mycards={true} voltar={false} />
-      <h1>Todos os cartões</h1>
+      <H1>Todos os cartões</H1>
       <Cards>
         {profiles.map((item, index) => (
           <>
@@ -108,15 +109,27 @@ const MyCards: React.FC = () => {
                 </Box1>
                 <Box2>
                   <H4>{item.nomeCompleto}</H4>
-                  <P>Nome social: {item.nomeSocial}</P>
-                  <P>Nascimento: {item.dataNascimento}</P>
-                  <P>Email: {item.email}</P>
-                  <P>Telefone: {item.telefone}</P>
+                  <DivTitle>
+                    <Span>Nome social:</Span>
+                    <Ptitle> {item.nomeSocial}</Ptitle>
+                  </DivTitle>
+                  <DivTitle>
+                    <Span>Nascimento:</Span>
+                    <Ptitle> {item.dataNascimento}</Ptitle>
+                  </DivTitle>
+                  <DivTitle>
+                    <Span>Email:</Span>
+                    <Ptitle> {item.email}</Ptitle>
+                  </DivTitle>
+                  <DivTitle>
+                    <Span>Telefone:</Span>
+                    <Ptitle> {item.telefone}</Ptitle>
+                  </DivTitle>
                 </Box2>
               </CardFront>
               <CardBack>
                 <ImageBack src={qrcode} alt="" />
-                <p>
+                <P>
                   <a href={item.redesSociais.linkedin}>
                     <AiFillLinkedin size={30} />
                   </a>
@@ -129,7 +142,7 @@ const MyCards: React.FC = () => {
                   <a href={item.redesSociais.facebook}>
                     <AiFillFacebook size={30} />
                   </a>
-                </p>
+                </P>
                 <Link
                   to={`/editar/${item.id}`}
                   style={{ textDecoration: "none" }}
@@ -142,6 +155,7 @@ const MyCards: React.FC = () => {
           </>
         ))}
       </Cards>
+      <ToastContainer />
     </Container>
   );
 };

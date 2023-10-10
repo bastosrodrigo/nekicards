@@ -20,7 +20,6 @@ import React, { useEffect, useState } from "react";
 import Header from "../../components/header";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import avatar from "../../assets/avatar.png";
 import qrcode from "../../assets/qrcode.png";
 import {
   AiFillFacebook,
@@ -78,7 +77,11 @@ const Editar = () => {
     }
     api.put("/profiles/" + id, data).then((response) => {
       toast.success("Perfil atualizado com sucesso!");
-      navigate("/meuscards");
+      setTimeout(() => {
+        {
+          navigate("/meuscards");
+        }
+      }, 2000);
     });
   }
 
@@ -86,7 +89,7 @@ const Editar = () => {
     <>
       <Header mycards={false} voltar={true} />
       <Container>
-        <h1>ADICIONAR CARTÃO</h1>
+        <h1>Editar cartão de {data.nomeCompleto}</h1>
         <Card>
           <CardFront>
             <Box1>
@@ -175,16 +178,20 @@ const Editar = () => {
               onChange={(e) => setData({ ...data, telefone: e.target.value })}
             />
           </div>
-        </Form>
-
-        <h4>Redes Sociais:</h4>
-        <Form onSubmit={handleSubmit}>
           <div>
             <Label htmlFor="">Linkedin:</Label>
             <Input
               type="text"
               value={data.redesSociais?.linkedin}
-              onChange={(e) => setData({ ...data, linkedin: e.target.value })}
+              onChange={(e) =>
+                setData({
+                  ...data,
+                  redesSociais: {
+                    ...data.redesSociais,
+                    linkedin: e.target.value,
+                  },
+                })
+              }
             />
           </div>
           <div>
@@ -193,7 +200,15 @@ const Editar = () => {
               id="github"
               type="text"
               value={data.redesSociais?.github}
-              onChange={(e) => setData({ ...data, github: e.target.value })}
+              onChange={(e) =>
+                setData({
+                  ...data,
+                  redesSociais: {
+                    ...data.redesSociais,
+                    github: e.target.value,
+                  },
+                })
+              }
             />
           </div>
           <div>
@@ -202,7 +217,15 @@ const Editar = () => {
               id="instagram"
               type="text"
               value={data.redesSociais?.instagram}
-              onChange={(e) => setData({ ...data, instagram: e.target.value })}
+              onChange={(e) =>
+                setData({
+                  ...data,
+                  redesSociais: {
+                    ...data.redesSociais,
+                    instagram: e.target.value,
+                  },
+                })
+              }
             />
           </div>
           <div>
@@ -211,7 +234,15 @@ const Editar = () => {
               id="facebook"
               type="text"
               value={data.redesSociais?.facebook}
-              onChange={(e) => setData({ ...data, facebook: e.target.value })}
+              onChange={(e) =>
+                setData({
+                  ...data,
+                  redesSociais: {
+                    ...data.redesSociais,
+                    facebook: e.target.value,
+                  },
+                })
+              }
             />
           </div>
 

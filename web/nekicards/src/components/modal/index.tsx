@@ -4,6 +4,17 @@ import "react-toastify/dist/ReactToastify.css";
 import api from "../../api";
 import { ToastContainer, toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import {
+  Button,
+  Div,
+  DivButton,
+  Input,
+  Label,
+  ModalContainer,
+  ModalContent,
+  Span,
+  Form,
+} from "./styles";
 
 const Modal = ({ isOpen, onClose, onSave }: any) => {
   const [email, setEmail] = useState("");
@@ -31,7 +42,7 @@ const Modal = ({ isOpen, onClose, onSave }: any) => {
     setValidarEmail(valido);
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
     try {
       const token = localStorage.getItem("token");
@@ -81,13 +92,13 @@ const Modal = ({ isOpen, onClose, onSave }: any) => {
   };
 
   return (
-    <div className={`modal ${isOpen ? "open" : "closed"}`}>
-      <div className="modal-content">
-        <span>Cadastrar novo cartão</span>
-        <form onSubmit={handleSubmit} className="form-home">
-          <div>
-            <label>E-mail*:</label>
-            <input
+    <ModalContainer className={`modal ${isOpen ? "open" : "closed"}`}>
+      <ModalContent>
+        <Span>Cadastrar novo cartão</Span>
+        <Form onSubmit={handleSubmit}>
+          <Div>
+            <Label>E-mail*:</Label>
+            <Input
               type="email"
               value={email}
               onChange={handleValidEmail}
@@ -98,73 +109,91 @@ const Modal = ({ isOpen, onClose, onSave }: any) => {
                 O email deve terminar com "@neki-it.com.br" ou "@neki.com.br"
               </p>
             )}
-          </div>
-          <div>
-            <label>Nome Completo*:</label>
-            <input
+          </Div>
+          <Div>
+            <Label>Nome Completo*:</Label>
+            <Input
               type="text"
               value={nomeCompleto}
               onChange={(e) => setNomeCompleto(e.target.value)}
               required
             />
-          </div>
-          <div>
-            <label>Nome Social:</label>
-            <input
+          </Div>
+          <Div>
+            <Label>Nome Social:</Label>
+            <Input
               type="text"
               value={nomeSocial}
               onChange={(e) => setNomeSocial(e.target.value)}
             />
-          </div>
-          <div>
-            <label>Data de Nascimento*:</label>
-            <input
+          </Div>
+          <Div>
+            <Label>Data de Nascimento*:</Label>
+            <Input
               type="text"
               value={dataNascimento}
               onChange={(e) => setDataNascimento(e.target.value)}
               required
             />
-          </div>
-          <div>
-            <label>Foto*:</label>
-            <input
+          </Div>
+          <Div>
+            <Label>Foto*:</Label>
+            <Input
               type="text"
               onChange={(e) => setFoto(e.target.value)}
               required
             />
-          </div>
-          <div>
-            <label>Telefone:</label>
-            <input
+          </Div>
+          <Div>
+            <Label>Telefone:</Label>
+            <Input
               type="tel"
               value={telefone}
               onChange={(e) => setTelefone(e.target.value)}
             />
-          </div>
-          <div>
-            <label htmlFor="">Linkedin:</label>
-            <input type="text" />
-          </div>
-          <div>
-            <label htmlFor="">Github:</label>
-            <input type="text" />
-          </div>
-          <div>
-            <label htmlFor="">Instagram:</label>
-            <input type="text" />
-          </div>
-          <div>
-            <label htmlFor="">Facebook:</label>
-            <input type="text" />
-          </div>
-        </form>
-        <button onClick={handleSubmit} disabled={!validarEmail}>
-          Salvar
-        </button>
-        <button onClick={onClose}>Cancelar</button>
-      </div>
+          </Div>
+          <Div>
+            <Label htmlFor="">Linkedin:</Label>
+            <Input
+              type="text"
+              value={linkedin}
+              onChange={(e) => setLinkedin(e.target.value)}
+            />
+          </Div>
+          <Div>
+            <Label htmlFor="">Github:</Label>
+            <Input
+              type="text"
+              value={github}
+              onChange={(e) => setGithub(e.target.value)}
+            />
+          </Div>
+          <Div>
+            <Label htmlFor="">Instagram:</Label>
+            <Input
+              type="text"
+              value={instagram}
+              onChange={(e) => setInstagram(e.target.value)}
+            />
+          </Div>
+          <Div>
+            <Label htmlFor="">Facebook:</Label>
+            <Input
+              type="text"
+              value={facebook}
+              onChange={(e) => setFacebook(e.target.value)}
+            />
+          </Div>
+        </Form>
+        <DivButton>
+          <Button onClick={handleSubmit} disabled={!validarEmail}>
+            Salvar
+          </Button>
+          <Button onClick={onClose}>Cancelar</Button>
+        </DivButton>
+      </ModalContent>
       <ToastContainer />
-    </div>
+    </ModalContainer>
   );
 };
 

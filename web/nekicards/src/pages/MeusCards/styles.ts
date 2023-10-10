@@ -4,6 +4,8 @@ export const Container = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
+  background-color: #d0d6ff;
+  height: 100vh;
   margin-top: 100px;
   overflow-x: none;
 `;
@@ -22,13 +24,13 @@ export const CardsContainer = styled.div`
   justify-content: space-between;
   gap: 20px;
 
-  @media (max-width: 425px) {
+  @media (max-width: 750px) {
     flex-direction: column;
   }
 `;
 
 export const CardFront = styled.div`
-  width: 350px;
+  width: 360px;
   height: 200px;
   background-color: #a1aeff;
   border-radius: 10px;
@@ -41,7 +43,7 @@ export const CardFront = styled.div`
 `;
 
 export const Image = styled.img`
-  height: 100px;
+  height: 90px;
   width: auto;
   flex-shrink: 0;
   border-radius: 5px;
@@ -65,7 +67,7 @@ export const ImageBack = styled.img`
 `;
 
 export const CardBack = styled.div`
-  width: 350px;
+  width: 360px;
   height: 200px;
   background-color: #a1aeff;
   box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
@@ -83,6 +85,11 @@ export const CardBack = styled.div`
 export const H4 = styled.h4`
   text-align: center;
   margin: 5px;
+  padding-bottom: 15px;
+`;
+
+export const H1 = styled.h1`
+  color: #000;
 `;
 export const P = styled.p`
   margin: 5px;
@@ -93,13 +100,27 @@ export const Button = styled.button`
   border-radius: 2px;
   font-weight: bold;
   border: none;
-  height: 5px;
   margin: 5px;
   cursor: pointer;
 
-  :hover {
+  &:hover {
     background-color: #766d88;
-    color: #711188;
+    color: #000;
     transition: 0.5s;
   }
+`;
+
+export const DivTitle = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+  margin: 0;
+`;
+
+export const Span = styled.span`
+  font-weight: bold;
+`;
+
+export const Ptitle = styled.p`
+  margin: 0;
 `;

@@ -16,6 +16,10 @@ export const Card = styled.div`
   justify-content: center;
   gap: 30px;
   margin-bottom: 20px;
+
+  @media (max-width: 750px) {
+    flex-direction: column;
+  }
 `;
 
 export const CardFront = styled.div`
@@ -73,6 +77,10 @@ export const Form = styled.form`
   display: grid;
   grid-template-columns: 300px 300px;
   gap: 20px;
+
+  @media (max-width: 650px) {
+    grid-template-columns: 300px;
+  }
 `;
 
 export const Input = styled.input`
