@@ -21,7 +21,6 @@ export const ModalContent = styled.div`
   flex-direction: column;
   align-items: center;
   background-color: #fff;
-  width: 800px;
   padding: 20px;
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
@@ -50,6 +49,7 @@ export const Button = styled.button`
   background-color: #b09cc2;
   border-radius: 5px;
   font-weight: bold;
+  margin-top: 10px;
   margin-bottom: 10px;
   border: none;
   padding: 10px;

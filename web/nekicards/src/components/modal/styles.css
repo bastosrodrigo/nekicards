@@ -2,3 +2,8 @@
   pointer-events: auto;
   opacity: 1;
 }
+
+.field-error {
+  color: red;
+  text-align: center;
+}

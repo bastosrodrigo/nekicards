@@ -31,8 +31,9 @@ export const CardFront = styled.div`
 `;
 
 export const Img = styled.img`
-  height: 100px;
-  width: auto;
+  height: 90px;
+  width: 90px;
+  margin-top: 20px;
   flex-shrink: 0;
   border-radius: 5px;
   margin-left: 5px;
