@@ -45,9 +45,11 @@ function App() {
           }
         }, 2000);
       } else {
-        console.error("Falha no login");
+        toast.error("Falha no login");
+        console.error("Email ou senha inválidos.");
       }
     } catch (error) {
+      toast.error("Falha no login");
       console.error("Erro durante o login:", error);
     }
   };
